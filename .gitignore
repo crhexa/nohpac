@@ -1,4 +1,6 @@
 *.db
+*.exe
+*.gguf
 .godot/
 .import/
 export.cfg
