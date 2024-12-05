@@ -1,0 +1,21 @@
+﻿Benchmark ID,Device,System,Memory,Inference Framework,TC SP,TC HP,TC Q,MT SP,MT HP,MT Q,Link
+110996,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3183,3476,3148,3115,6274,7191,https://browser.geekbench.com/ai/v1/110996
+110844,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3211,2974,3017,3135,6194,7261,https://browser.geekbench.com/ai/v1/110844
+110794,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3184,2713,2167,3128,6047,6587,https://browser.geekbench.com/ai/v1/110794
+110770,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3202,3038,3207,3117,6150,7376,https://browser.geekbench.com/ai/v1/110770
+110722,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3187,3086,3208,3087,6343,7339,https://browser.geekbench.com/ai/v1/110722
+110715,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3218,3216,3035,3238,6727,7270,https://browser.geekbench.com/ai/v1/110715
+110697,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3187,3115,2998,3113,6146,7631,https://browser.geekbench.com/ai/v1/110697
+110664,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3208,2990,3112,3135,6285,7346,https://browser.geekbench.com/ai/v1/110664
+105474,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3243,3439,3107,3143,6199,7343,https://browser.geekbench.com/ai/v1/105474
+105220,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3186,2908,2374,3138,6325,7616,https://browser.geekbench.com/ai/v1/105220
+104564,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3194,3008,3181,3130,6463,7324,https://browser.geekbench.com/ai/v1/104564
+103801,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3127,3042,2865,3153,5891,7532,https://browser.geekbench.com/ai/v1/103801
+103689,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3199,3235,2869,3144,6231,7849,https://browser.geekbench.com/ai/v1/103689
+103409,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3206,3011,2634,3148,6207,7512,https://browser.geekbench.com/ai/v1/103409
+103058,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3199,2730,1803,3160,6126,7385,https://browser.geekbench.com/ai/v1/103058
+102992,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3189,3428,3396,3127,6256,7552,https://browser.geekbench.com/ai/v1/102992
+102505,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3119,2942,2969,2989,5796,6795,https://browser.geekbench.com/ai/v1/102505
+98860,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3237,3304,3479,3202,6185,7418,https://browser.geekbench.com/ai/v1/98860
+98364,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3256,2099,1921,3144,6540,7444,https://browser.geekbench.com/ai/v1/98364
+98295,iPhone 15 Pro,A17 Pro,8 GB,Core ML Neural Engine,3188,3016,3122,3113,6138,7302,https://browser.geekbench.com/ai/v1/98295
