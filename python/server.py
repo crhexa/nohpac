@@ -1,11 +1,66 @@
 import socketserver
 import getopt, sys
+import json
 
+import pipeline
+
+REQUEST_LENGTH = 8192
+
+def parse_json(data):
+    opcode = data['opcode']
+    if opcode == 1234:
+        return None, True
+    
+    prompt = data['prompt']
+    choices = data['choices']
+
+    match opcode:
+        case 0:
+            reply = pipeline.completion(prompt, choices)
+        case 1:
+            reply = pipeline.question(prompt)
+        case _:
+            raise AssertionError
+
+    response = {
+        'status': 0,
+        'response': reply
+    }
+    return response, False
+    
 
 class TCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
-        return
+        data = self.request.recv(REQUEST_LENGTH).strip()
+
+        try:
+            json_data = json.loads(data.decode('utf-8'))
+            response, shutdown = parse_json(json_data)
+
+        except KeyError:
+            response = {
+                'status': -1,
+                'message' : 'json missing opcode',
+                'opcode' : -1
+            }
+        except AssertionError:
+            response = {
+                'status': -1,
+                'message' : 'json opcode type error',
+                'opcode' : -1
+            }
+        except json.JSONDecodeError:
+            response = {
+                'status': -1,
+                'message' : 'malformed json',
+                'opcode' : -1
+            }
+        
+        if shutdown:
+            self.server._BaseServer__shutdown_request = True
+        else:
+            self.request.sendall(json.dumps(response).encode('utf-8'))
 
 
 if __name__ == "__main__":
@@ -15,7 +70,7 @@ if __name__ == "__main__":
 
     for opt, arg in options:
         if opt in ("-p", "--port"):
-            port = opt
+            port = int(arg)
         else:
             port = None
             break
@@ -25,5 +80,9 @@ if __name__ == "__main__":
         sys.exit()
 
     with socketserver.TCPServer((HOST, port), TCPRequestHandler) as server:
-        server.serve_forever()
-
+        print("Server starting up...")
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            pass
+        print("Server shutting down...")
