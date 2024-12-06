@@ -1,4 +1,7 @@
-from haystack import Pipeline, Document
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+from haystack import Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 #from haystack.components.builders.prompt_builder import PromptBuilder
 #from haystack.components.embedders.sentence_transformers_text_embedder import SentenceTransformersTextEmbedder

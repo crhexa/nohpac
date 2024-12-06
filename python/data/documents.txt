@@ -1,0 +1,2 @@
+Apples are colored red
+Apples have a price of $1
