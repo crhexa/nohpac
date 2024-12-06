@@ -5,6 +5,7 @@
 
 [node name="Root" type="Node"]
 script = ExtResource("1_j8tdj")
+HOST = "127.0.0.1"
 
 [node name="Server" type="Node" parent="."]
 script = ExtResource("1_21mdr")
