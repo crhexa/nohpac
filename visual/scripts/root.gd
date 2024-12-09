@@ -27,20 +27,18 @@ func _process(_delta : float) -> void:
 			"choices": ["YES", "NO"]
 		})
 		print(reply)
-		send_json({"opcode": 1234})
+		close_server()
 
-
+#region Server Functions
 # Stop the engine if an error is encountered
 func fail() -> void:
 	responded.emit()
 	print("Stopped execution")
 	get_tree().paused = true
 
-
 # Send JSON from a dictionary
 func send_json(data : Dictionary) -> bool:
 	return server.send(JSON.stringify(data).to_utf8_buffer())
-
 
 # Recieve JSON to a dictionary
 func recv_json(data : PackedByteArray) -> void:
@@ -72,3 +70,7 @@ func send_reply(data : Dictionary) -> Dictionary:
 
 	await finished
 	return response
+	
+func close_server() -> void:
+	send_json({"opcode": 1234})
+#endregion

@@ -1,4 +1,4 @@
 {
-    "checkpoint": "HuggingFaceTB/SmolLM2-360M",
+    "checkpoint": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
     "temperature": 0.6
 }
