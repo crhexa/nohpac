@@ -3,12 +3,13 @@ extends Node
 @export var HOST : String = "localhost"
 @export var PORT : int = 9999
 @onready var server : Server = get_node("Server")
+@onready var gui : Control = get_node("Interface")
 
 signal responded
 signal finished
 
 var response : Dictionary = {}
-var switch : bool = true
+var connected : bool = false
 
 func _ready() -> void:
 	server.error.connect(fail)
@@ -16,8 +17,8 @@ func _ready() -> void:
 	server.connect_to_host(HOST, PORT)
 
 func _process(_delta : float) -> void:
-	if switch:
-		switch = false
+	if not connected:
+		connected = true
 		await server.connected
 		print("Successfully connected")
 		server.recieved.connect(recv_json)
@@ -27,7 +28,29 @@ func _process(_delta : float) -> void:
 			"choices": ["YES", "NO"]
 		})
 		print(reply)
-		close_server()
+
+func multiple_choice(question : String, choices : Array[String]) -> int:
+	var elapsed : int = Time.get_ticks_msec()
+	await send_reply({
+		"opcode": 0,
+		"prompt": question,
+		"choices": choices
+	})
+	#getreply and update gui
+	return Time.get_ticks_msec() - elapsed
+	
+func open_ended(question : String, context : String) -> int:
+	var elapsed : int = Time.get_ticks_msec()
+	await send_reply({
+		"opcode": 1,
+		"prompt": question,
+	})
+	#getreply and update gui
+	return Time.get_ticks_msec() - elapsed
+		
+func exit() -> void:
+	close_server()
+	get_tree().quit()
 
 #region Server Functions
 # Stop the engine if an error is encountered
