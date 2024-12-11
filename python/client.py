@@ -24,7 +24,7 @@ def send_json(requests : list[dict]):
         sock.sendall(shutdown)
 
 
-def request(data : dict) -> None:
+def request(data : list[dict]) -> None:
     t1 = time.time()
     send_json(data)
     t2 = time.time()
@@ -33,7 +33,7 @@ def request(data : dict) -> None:
 
 if __name__ == "__main__":
     req1 = {
-        "opcode": COMPLETION,
+        "opcode": 0,
         "prompt": "I hate Mondays. This sentence is",
         "choices": [
             "positive",
@@ -41,12 +41,15 @@ if __name__ == "__main__":
         ]
     }
     req2 = {
-        "opcode": COMPLETION,
-        "prompt": "I love Tuesdays. This sentence is",
+        "opcode": 2,
+        "prompt": "I hate Mondays. This sentence is",
         "choices": [
             "positive",
             "negative"
-        ]
+        ],
+        "reply": "positive",
+        "rating": 5,
+        "time": 1
     }
     
-    request([req1, req2, req1, req2, req1, req2])
+    request([req1, req2])

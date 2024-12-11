@@ -1,13 +1,15 @@
 import socketserver
-import getopt, sys
-import json
+import getopt, sys, json
 import pipeline
+import pandas as pd
 
+log : pd.DataFrame = None
 
 REQUEST_LENGTH = 8192
 
 def parse_json(data):
     opcode, prompt, choices = None, None, None
+    reply : str = ""
 
     opcode = data['opcode']
     if opcode == 1234:
@@ -21,6 +23,21 @@ def parse_json(data):
             reply = pipeline.completion(prompt, choices)
         case 1:
             reply = pipeline.question(prompt)
+        case 2:
+            prompt = data['prompt']
+            choices = data['choices']
+            response = data['reply']
+            rating = data['rating']
+            time = data['time']
+            log.loc[len(log)] = ['mc', prompt, choices, response, rating, time]
+            reply = "mc logged"
+        case 3:
+            prompt = data['prompt']
+            rating = data['rating']
+            response = data['reply']
+            time = data['time']
+            log.loc[len(log)] = ['qa', prompt, [], response, rating, time]
+            reply = "qa logged"
         case _:
             raise AssertionError
 
@@ -86,8 +103,12 @@ if __name__ == "__main__":
 
     with socketserver.TCPServer((HOST, port), TCPRequestHandler) as server:
         print("Server starting up...")
+        log = pd.DataFrame(
+            columns=['type', 'prompt', 'choices', 'reply', 'rating', 'time'], 
+        )
         try:
             server.serve_forever()
         except KeyboardInterrupt:
             pass
+        log.to_csv('python/data/logs.csv')
         print("Server shutting down...")
