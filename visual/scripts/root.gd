@@ -38,6 +38,7 @@ func multiple_choice(question : String, choices : Array[String]) -> void:
 	})
 	elapsed = Time.get_ticks_msec() - elapsed
 	s2.display_response(reply["response"], elapsed)
+	print("[DEBUG] Query took %s ms" % elapsed)
 	
 func open_ended(question : String) -> void:
 	var elapsed : int = Time.get_ticks_msec()
@@ -47,6 +48,7 @@ func open_ended(question : String) -> void:
 	})
 	elapsed = Time.get_ticks_msec() - elapsed
 	s1.display_response(reply["response"], elapsed)
+	print("[DEBUG] Query took %s ms" % elapsed)
 
 		
 func exit() -> void:

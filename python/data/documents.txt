@@ -4,6 +4,5 @@ bananas are yellow
 bananas cost $2
 blueberries are blue colored
 blueberries cost $3 for one box
-the bank is located behind the library
-the library is located across from the school
-the city hall is located in uptown
+cherries are red colored
+cherries cost $4 for one box
