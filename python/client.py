@@ -34,7 +34,7 @@ def request(data : list[dict]) -> None:
 if __name__ == "__main__":
     req1 = {
         "opcode": 0,
-        "prompt": "I hate Mondays. This sentence is",
+        "prompt": "<|user|> I hate Mondays. <|system|> This sentence is",
         "choices": [
             "positive",
             "negative"
@@ -52,4 +52,4 @@ if __name__ == "__main__":
         "time": 1
     }
     
-    request([req1, req2])
+    request([req1, req1, req1, req1, req1])
