@@ -4,6 +4,9 @@ extends Node
 @export var PORT : int = 9999
 @onready var server : Server = get_node("Server")
 @onready var gui : Control = get_node("Interface")
+@onready var s1 : Control = get_node("Interface/Screen1")
+@onready var s2 : Control = get_node("Interface/Screen2")
+@onready var exit_button : Button = get_node("Interface/ExitIcon/ExitButton")
 
 signal responded
 signal finished
@@ -22,31 +25,29 @@ func _process(_delta : float) -> void:
 		await server.connected
 		print("Successfully connected")
 		server.recieved.connect(recv_json)
-		var reply : Dictionary = await send_reply({
-			"opcode": 0,
-			"prompt": "Respond with \"YES\"",
-			"choices": ["YES", "NO"]
-		})
-		print(reply)
+		s1.query.connect(open_ended)
+		s2.query.connect(multiple_choice)
+		exit_button.pressed.connect(exit)
 
-func multiple_choice(question : String, choices : Array[String]) -> int:
+func multiple_choice(question : String, choices : Array[String]) -> void:
 	var elapsed : int = Time.get_ticks_msec()
-	await send_reply({
+	var reply : Dictionary = await send_reply({
 		"opcode": 0,
 		"prompt": question,
 		"choices": choices
 	})
-	#getreply and update gui
-	return Time.get_ticks_msec() - elapsed
+	elapsed = Time.get_ticks_msec() - elapsed
+	s2.display_response(reply["response"], elapsed)
 	
-func open_ended(question : String, context : String) -> int:
+func open_ended(question : String) -> void:
 	var elapsed : int = Time.get_ticks_msec()
-	await send_reply({
+	var reply : Dictionary = await send_reply({
 		"opcode": 1,
 		"prompt": question,
 	})
-	#getreply and update gui
-	return Time.get_ticks_msec() - elapsed
+	elapsed = Time.get_ticks_msec() - elapsed
+	s1.display_response(reply["response"], elapsed)
+
 		
 func exit() -> void:
 	close_server()

@@ -4,6 +4,7 @@ extends ColorRect
 @onready var right : Button = get_node("RightArrow/RightButton")
 @onready var limg : TextureRect = get_node("LeftArrow")
 @onready var rimg : TextureRect = get_node("RightArrow")
+@onready var text : Label = get_node("Label")
 
 @onready var s1 : Control = get_node("Screen1")
 @onready var s2 : Control = get_node("Screen2")
@@ -47,7 +48,9 @@ func toggle_visible() -> void:
 	if page == 0:
 		s1.visible = true
 		s2.visible = false
+		text.text = "QA"
 		
 	if page == 1:
 		s1.visible = false
 		s2.visible = true
+		text.text = "MCQA"
