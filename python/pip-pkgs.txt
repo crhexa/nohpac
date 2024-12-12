@@ -3,3 +3,4 @@ outlines==0.0.46
 transformers[torch,sentencepiece]
 bitsandbytes>=0.39.0
 accelerate
+sentence-transformers

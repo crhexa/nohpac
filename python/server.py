@@ -1,5 +1,5 @@
 import socketserver
-import getopt, sys, json
+import getopt, json, sys
 import pipeline
 import pandas as pd
 
@@ -9,7 +9,7 @@ REQUEST_LENGTH = 8192
 
 def parse_json(data):
     opcode, prompt, choices = None, None, None
-    reply : str = ""
+    reply : str = ''
 
     opcode = data['opcode']
     if opcode == 1234:
@@ -30,14 +30,14 @@ def parse_json(data):
             rating = data['rating']
             time = data['time']
             log.loc[len(log)] = ['mc', prompt, choices, response, rating, time]
-            reply = "mc logged"
+            reply = 'mc logged'
         case 3:
             prompt = data['prompt']
             rating = data['rating']
             response = data['reply']
             time = data['time']
             log.loc[len(log)] = ['qa', prompt, [], response, rating, time]
-            reply = "qa logged"
+            reply = 'qa logged'
         case _:
             raise AssertionError
 
@@ -51,7 +51,7 @@ def parse_json(data):
 class TCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
-        print("Client connected.")
+        print('Client connected.')
         shutdown = False
 
         while not shutdown:
@@ -85,24 +85,25 @@ class TCPRequestHandler(socketserver.BaseRequestHandler):
                 self.request.sendall(json.dumps(response).encode('utf-8'))
 
 
-if __name__ == "__main__":
-    HOST = "localhost"
+if __name__ == '__main__':
+    HOST = 'localhost'
     port = None
-    options, args = getopt.getopt(sys.argv[1:], "p:", ["port="])
+    options, args = getopt.getopt(sys.argv[1:], 'p:', ['port='])
 
     for opt, arg in options:
-        if opt in ("-p", "--port"):
+        if opt in ('-p', '--port'):
             port = int(arg)
         else:
             port = None
             break
 
     if port == None:
-        print(f"Usage: python {sys.argv[0]} -p <port>")
+        print(f'Usage: python {sys.argv[0]} -p <port>')
         sys.exit()
 
     with socketserver.TCPServer((HOST, port), TCPRequestHandler) as server:
-        print("Server starting up...")
+        print('Server starting up...')
+        print(f'Memory footprint: {pipeline.get_memory()/1e9:.2f} GB')
         log = pd.DataFrame(
             columns=['type', 'prompt', 'choices', 'reply', 'rating', 'time'], 
         )
@@ -111,4 +112,4 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             pass
         log.to_csv('python/data/logs.csv')
-        print("Server shutting down...")
+        print('Server shutting down...')
